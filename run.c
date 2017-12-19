@@ -69,7 +69,7 @@ if(base==0)
   p_meta tmp2 = end;
   end += l;
   int ret = brk(end);
-  if(ret == -1) return ; 
+  if(ret == -1) return ;
   tmp2->prev = tmp;
   tmp2->size = size;
   if(tmp!=-1) tmp->next = tmp2;
@@ -110,8 +110,9 @@ m_realloc(void* ptr, size_t size)
   if(size%4!=0) size += (4-size%4);
   if(now->size == size) return ptr; // don't need to realloc
   if(now->size < size){
-    int chk = now->size + now->next->size;
-    if(now->next && now->next->free && chk + META_SIZE>=size){
+    //size_t chk = now->size + now->next->size;
+    if(now->next && now->next->free && now->size+now->next->size + META_SIZE>=size){
+
       now->size = now->size + now->next->size + META_SIZE;
       now->next = now->next->next;
       now->next->prev = now;
